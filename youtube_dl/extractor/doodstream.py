@@ -26,7 +26,7 @@ class DoodStreamIE(InfoExtractor):
     @staticmethod
     def _extract_urls(webpage):
         return re.findall(
-            r'<iframe[^>]+?src=["\'](?P<url>(?:https?://)?dood\.(?:watch|to|so)/e/.+?)["\']',
+            r'<iframe[^>]+?src=["\'](?P<url>(?:https?://)?dood\.(?:watch|to|so|re|wf)/e/.+?)["\']',
             webpage)
 
     def _real_extract(self, url):
@@ -42,7 +42,7 @@ class DoodStreamIE(InfoExtractor):
         # title = self._html_search_meta(['og:title'],
         #                                webpage, default=None)
         title = self._html_search_regex(r'<title>(.+?)</title>',webpage,'title')
-        
+        print(title)
         thumb = self._html_search_meta(['og:image', 'twitter:image'],
                                        webpage, default=None)
         token = self._html_search_regex(r'[?&]token=([a-z0-9]+)[&\']', webpage, 'token')
