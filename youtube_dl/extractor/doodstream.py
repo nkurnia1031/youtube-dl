@@ -10,16 +10,16 @@ from .common import InfoExtractor
 
 
 class DoodStreamIE(InfoExtractor):
-    _VALID_URL = r'https?://(?:www\.)?dood\.(?:to|watch|so)/[ed]/(?P<id>[a-z0-9]+)'
+    _VALID_URL = r'https?://(?:www\.)?dood\.(?:to|watch|so|re|wf)/[ed]/(?P<id>[a-z0-9]+)'
     _TEST = {
-        'url': 'https://dood.to/d/jzrxn12t2s7n',
-        'md5': '3207e199426eca7c2aa23c2872e6728a',
+        'url': 'https://dood.to/d/9di5z1vfnwqe',
+        'md5': 'a8dcc12df73eeedf86206f665fc51100',
         'info_dict': {
-            'id': 'jzrxn12t2s7n',
+            'id': '9di5z1vfnwqe',
             'ext': 'mp4',
-            'title': 'Stacy Cruz Cute ALLWAYSWELL',
-            'description': 'Stacy Cruz Cute ALLWAYSWELL | DoodStream.com',
-            'thumbnail': 'https://img.doodcdn.com/splash/8edqd5nppkac3x8u.jpg',
+            'title': "Hijab mulus - DoodStream",
+            'description': None,
+            'thumbnail': 'https://img.doodcdn.co/splash/1z5fk5htzw3a9ei2.jpg',
         }
     }
 
@@ -39,8 +39,10 @@ class DoodStreamIE(InfoExtractor):
             video_id = self._match_id(url)
             webpage = self._download_webpage(url, video_id)
 
-        title = self._html_search_meta(['og:title', 'twitter:title'],
-                                       webpage, default=None)
+        # title = self._html_search_meta(['og:title'],
+        #                                webpage, default=None)
+        title = self._html_search_regex(r'<title>(.+?)</title>',webpage,'title')
+        
         thumb = self._html_search_meta(['og:image', 'twitter:image'],
                                        webpage, default=None)
         token = self._html_search_regex(r'[?&]token=([a-z0-9]+)[&\']', webpage, 'token')
